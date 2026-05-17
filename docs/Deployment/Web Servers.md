@@ -28,7 +28,7 @@ server {
 
     location / {
         # Try to serve the file directly, then as a directory (index.html), then 404
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ $uri.html =404;
     }
 
     # Optional: Cache static assets for better performance
