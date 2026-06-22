@@ -48,18 +48,18 @@ func toStr(v any) string {
 
 // ogImageURL builds a full URL for an Open Graph or Twitter Card image.
 // slug is the page identifier (e.g. "my-page"), kind is "og" or "twitter".
-// For flat URLs the image is inside the page directory: /path/slug-kind.png
-// For non-flat URLs the image sits next to the .html file: /parent/slug-kind.png
+// Flat URLs: image sits next to the .html file: /path/slug-kind.png
+// Non-flat URLs: image is inside the page directory: /path/slug-kind.png (the web path IS the directory)
 func ogImageURL(baseURL, webPath, slug, kind string, flatURLs bool) string {
 	filename := slug + "-" + kind + ".png"
 	if flatURLs {
-		return baseURL + webPath + "/" + filename
+		parent := path.Dir(webPath)
+		if parent == "/" || parent == "." {
+			return baseURL + "/" + filename
+		}
+		return baseURL + parent + "/" + filename
 	}
-	parent := path.Dir(webPath)
-	if parent == "/" || parent == "." {
-		return baseURL + "/" + filename
-	}
-	return baseURL + parent + "/" + filename
+	return baseURL + webPath + filename
 }
 
 // buildThemeCSS builds the inline <style> block with CSS custom properties

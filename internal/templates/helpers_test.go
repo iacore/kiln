@@ -88,7 +88,7 @@ func TestHead_OGMetaTags(t *testing.T) {
 	data := &PageData{
 		File: &obsidian.File{
 			Name:    "my-post",
-			WebPath: "/blog/my-post",
+			WebPath: "/blog/my-post/",
 		},
 		Frontmatter: map[string]any{
 			"title":       "My Title",
@@ -110,13 +110,13 @@ func TestHead_OGMetaTags(t *testing.T) {
 	expected := []string{
 		`<meta property="og:title" content="My Title"`,
 		`<meta property="og:description" content="My Desc"`,
-		`<meta property="og:image" content="https://example.com/blog/my-post/og.png"`,
-		`<meta property="og:url" content="https://example.com/blog/my-post"`,
+		`<meta property="og:image" content="https://example.com/blog/my-post/my-post-og.png"`,
+		`<meta property="og:url" content="https://example.com/blog/my-post/"`,
 		`<meta property="og:type" content="article"`,
 		`<meta name="twitter:card" content="summary_large_image"`,
 		`<meta name="twitter:title" content="My Title"`,
 		`<meta name="twitter:description" content="My Desc"`,
-		`<meta name="twitter:image" content="https://example.com/blog/my-post/twitter.png"`,
+		`<meta name="twitter:image" content="https://example.com/blog/my-post/my-post-twitter.png"`,
 	}
 
 	for _, want := range expected {
@@ -131,7 +131,7 @@ func TestHead_OGMetaTags_Folder(t *testing.T) {
 		IsFolder: true,
 		Folder: &obsidian.Folder{
 			RelPath: "my-folder",
-			WebPath: "/my-folder",
+			WebPath: "/my-folder/",
 		},
 		Site: &SiteData{
 			BaseURL:  "https://example.com",
@@ -149,7 +149,7 @@ func TestHead_OGMetaTags_Folder(t *testing.T) {
 	expected := []string{
 		`<meta property="og:title" content="my-folder"`,
 		`<meta property="og:type" content="website"`,
-		`<meta property="og:url" content="https://example.com/my-folder"`,
+		`<meta property="og:url" content="https://example.com/my-folder/"`,
 	}
 
 	for _, want := range expected {
@@ -164,7 +164,7 @@ func TestHead_OGMetaTags_Tag(t *testing.T) {
 		IsTag: true,
 		Tag: &obsidian.Tag{
 			Name:    "golang",
-			WebPath: "/tags/golang",
+			WebPath: "/tags/golang/",
 		},
 		Site: &SiteData{
 			BaseURL:  "https://example.com",
@@ -182,7 +182,7 @@ func TestHead_OGMetaTags_Tag(t *testing.T) {
 	expected := []string{
 		`<meta property="og:title" content="golang"`,
 		`<meta property="og:type" content="website"`,
-		`<meta property="og:url" content="https://example.com/tags/golang"`,
+		`<meta property="og:url" content="https://example.com/tags/golang/"`,
 	}
 
 	for _, want := range expected {
@@ -196,7 +196,7 @@ func TestHead_OGMetaTags_NoDescription(t *testing.T) {
 	data := &PageData{
 		File: &obsidian.File{
 			Name:    "my-post",
-			WebPath: "/blog/my-post",
+			WebPath: "/blog/my-post/",
 		},
 		Frontmatter: map[string]any{
 			"title": "My Title",

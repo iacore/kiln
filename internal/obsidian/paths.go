@@ -59,13 +59,19 @@ func (o *Obsidian) GetPageWebPath(slugPath, ext string) (string, error) {
 			break
 		}
 
-		// Remove extension
+		// Remove extension and build web path
 		slugPath = strings.TrimSuffix(slugPath, ext)
 		webPath = filepath.Join(pathPrefix, slugPath)
+		// Accurate URLs: .html for flat, trailing / for directory
+		if o.FlatURLs {
+			webPath += ".html"
+		} else {
+			webPath += "/"
+		}
 
 	case "":
-		// Handle folder webpaths
-		webPath = filepath.Join(pathPrefix, slugPath)
+		// Handle folder webpaths with trailing slash (directory)
+		webPath = filepath.Join(pathPrefix, slugPath) + "/"
 
 	default:
 		// If static file, just append together pathPrefix and slugPath
@@ -95,13 +101,12 @@ func (o *Obsidian) GetPageOutputPath(slugPath, ext string) (string, error) {
 			break
 		}
 
-		// Handle non flat urls by using the slug path as a folder
+		// Flat URLs: note.html, non-flat: note/index.html
 		if o.FlatURLs {
-			outputPath = filepath.Join(o.OutputDir, fileName, "/index.html")
+			outputPath = filepath.Join(o.OutputDir, fileName+".html")
 			break
 		}
-
-		outputPath = filepath.Join(o.OutputDir, fileName+".html")
+		outputPath = filepath.Join(o.OutputDir, fileName, "/index.html")
 
 	case "":
 		// Handle folder webpaths
@@ -141,8 +146,8 @@ func (o *Obsidian) getFolderWebPath(folderRelPath string) (string, error) {
 	}
 
 	// 1. Join the prefix and the folder path
-	// 2. Append "index.html" as requested
-	webPath := filepath.Join(pathPrefix, folderRelPath)
+	// 2. Append trailing slash since folders are directories
+	webPath := filepath.Join(pathPrefix, folderRelPath) + "/"
 
 	// Replace OS separators with forward slashes for the web
 	return strings.ReplaceAll(webPath, string(os.PathSeparator), "/"), nil
@@ -164,6 +169,12 @@ func (o *Obsidian) getTagWebPath(tagName string) (string, error) {
 
 	name := strings.TrimPrefix(tagName, "#")
 	webPath = filepath.Join(pathPrefix, "tags", name)
+	// Accurate URLs: .html for flat, trailing / for directory
+	if o.FlatURLs {
+		webPath += ".html"
+	} else {
+		webPath += "/"
+	}
 
 	// Replace all os specific path separator. Thanks windows
 	return strings.ReplaceAll(webPath, string(os.PathSeparator), "/"), nil
@@ -178,11 +189,11 @@ func (o *Obsidian) getTagOutputPath(tagName string) (string, error) {
 	// Handles markdown, canvases and bases to become .html files
 	name := strings.TrimPrefix(tagName, "#")
 
-	// Handle non flat urls by using the slug path as a folder
+	// Flat URLs: tags/name.html, non-flat: tags/name/index.html
 	if o.FlatURLs {
-		outputPath = filepath.Join(o.OutputDir, "/tags", name, "/index.html")
-	} else {
 		outputPath = filepath.Join(o.OutputDir, "/tags", name+".html")
+	} else {
+		outputPath = filepath.Join(o.OutputDir, "/tags", name, "/index.html")
 	}
 
 	// Ensure the parent directory exists before returning

@@ -48,7 +48,7 @@ func Navbar(nodes []*obsidian.NavbarNode, flatURLs bool) templ.Component {
 				var templ_7745c5c3_Var2 templ.SafeURL
 				templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(navbarHref(node.Path, flatURLs))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/navbar.templ`, Line: 31, Col: 45}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `navbar.templ`, Line: 31, Col: 45}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 				if templ_7745c5c3_Err != nil {
@@ -61,7 +61,7 @@ func Navbar(nodes []*obsidian.NavbarNode, flatURLs bool) templ.Component {
 				var templ_7745c5c3_Var3 string
 				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(node.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/navbar.templ`, Line: 34, Col: 18}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `navbar.templ`, Line: 34, Col: 18}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {
@@ -109,7 +109,7 @@ func Navbar(nodes []*obsidian.NavbarNode, flatURLs bool) templ.Component {
 				var templ_7745c5c3_Var4 templ.SafeURL
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinURLErrs(navbarHref(node.Path, flatURLs))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/navbar.templ`, Line: 58, Col: 43}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `navbar.templ`, Line: 58, Col: 43}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -122,7 +122,7 @@ func Navbar(nodes []*obsidian.NavbarNode, flatURLs bool) templ.Component {
 				var templ_7745c5c3_Var5 string
 				templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(node.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/navbar.templ`, Line: 61, Col: 22}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `navbar.templ`, Line: 61, Col: 22}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 				if templ_7745c5c3_Err != nil {

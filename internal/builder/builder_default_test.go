@@ -27,10 +27,10 @@ func TestGeneratePageOGImages(t *testing.T) {
 		log: slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelWarn})),
 	}
 
-	site.GeneratePageOGImages("Test", "Desc", "", outDir)
+	site.GeneratePageOGImages("Test", "Desc", "test", outDir)
 
 	// Verify og.png exists and is a valid PNG
-	ogPath := filepath.Join(outDir, "og.png")
+	ogPath := filepath.Join(outDir, "test-og.png")
 	ogFile, err := os.Open(ogPath)
 	if err != nil {
 		t.Fatalf("og.png not created: %v", err)
@@ -46,7 +46,7 @@ func TestGeneratePageOGImages(t *testing.T) {
 	}
 
 	// Verify twitter.png exists and is a valid PNG
-	twPath := filepath.Join(outDir, "twitter.png")
+	twPath := filepath.Join(outDir, "test-twitter.png")
 	twFile, err := os.Open(twPath)
 	if err != nil {
 		t.Fatalf("twitter.png not created: %v", err)

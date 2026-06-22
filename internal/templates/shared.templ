@@ -174,21 +174,13 @@ templ PageName(data *PageData) {
 
 templ Canonical(data *PageData) {
 	if !data.IsFolder && !data.IsTag && data.File != nil {
-		if data.Site.FlatURLs {
-			<link rel="canonical" href={ data.Site.BaseURL + data.File.WebPath + "/" }/>
-		} else {
-			<link rel="canonical" href={ data.Site.BaseURL + data.File.WebPath }/>
-		}
+		<link rel="canonical" href={ data.Site.BaseURL + data.File.WebPath }/>
 	}
 	if data.IsFolder && data.Folder != nil {
-		<link rel="canonical" href={ data.Site.BaseURL + data.Folder.WebPath + "/" }/>
+		<link rel="canonical" href={ data.Site.BaseURL + data.Folder.WebPath }/>
 	}
 	if data.IsTag && data.Tag != nil {
-		if data.Site.FlatURLs {
-			<link rel="canonical" href={ data.Site.BaseURL + data.Tag.WebPath + "/" }/>
-		} else {
-			<link rel="canonical" href={ data.Site.BaseURL + data.Tag.WebPath }/>
-		}
+		<link rel="canonical" href={ data.Site.BaseURL + data.Tag.WebPath }/>
 	}
 }
 

@@ -42,14 +42,17 @@ func Serve(ctx context.Context, port, outputDir, baseURL string, log *slog.Logge
 		// r.URL.Path here is relative to the outputDir (prefix already stripped by http.StripPrefix)
 		path := r.URL.Path
 
-		// Trailing slash canonicalization
-		// Example: /about/ -> /about
+		// Trailing slash: serve directory index directly (non-flat mode)
+		// Example: /about/ -> serves /about/index.html
 		if path != "/" && strings.HasSuffix(path, "/") {
-			newPath := strings.TrimSuffix(path, "/")
-			// Reconstruct full path for the browser redirect (must include the prefix if one exists)
-			fullRedirectPath := pathPrefix + newPath
-			http.Redirect(w, r, fullRedirectPath, http.StatusMovedPermanently)
-			return
+			dirPath := filepath.Join(outputDir, path)
+			if info, err := os.Stat(dirPath); err == nil && info.IsDir() {
+				indexPath := filepath.Join(dirPath, "index.html")
+				if _, err := os.Stat(indexPath); err == nil {
+					http.ServeFile(w, r, indexPath)
+					return
+				}
+			}
 		}
 
 		// Pretty URL support
